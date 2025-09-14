@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Logix — Instant Log Triage</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Logix</div>
+    <nav class="topnav">
+  <a href="/want-solution" class="cta">Want a solution?</a>
+  <a href="https://www.youtube.com/watch?v=TMpLx3SXuNk" target="_blank" rel="noopener noreferrer" class="cta">User Guide</a>
+</nav>
+
+  </header>
+
+  <main class="layout">
+    <aside class="banner">
+      <h1>Are you <span class="accent">compromised</span>?</h1>
+      <p class="muted large">Upload your system log. Get an evidence-backed triage report — attack types, suspicious lines, and immediate fixes.</p>
+
+      <div class="feature-list">
+        <div class="feature"><strong>Fast Triage</strong><span> Seconds, not hours</span></div>
+        <div class="feature"><strong>Actionable</strong><span> Evidence + remediation steps</span></div>
+        <div class="feature"><strong>Local & Private</strong><span> Runs locally — no cloud by default</span></div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="card" id="upload">
+        <h2 class="big">Upload your log file</h2>
+        <p class="muted">Supported: <strong>.log</strong>, <strong>.txt</strong>, <strong>.evtx</strong></p>
+
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="form-grid">
+          <label class="file-label">
+            <input id="fileInput" name="logfile" type="file" accept=".log,.txt,.evtx" required />
+            <span class="file-name" id="fileName">No file chosen</span>
+          </label>
+
+          <div class="actions">
+            <button id="submitBtn" class="btn" type="submit">Analyze & Get Report</button>
+          </div>
+
+          <div id="status" class="status" aria-live="polite" hidden>
+            <div class="spinner"></div>
+            <span id="statusText">Uploading and analyzing — please wait...</span>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="card large">
+        <h3 class="big">How Logix helps (simple)</h3>
+        <ol class="how">
+          <li><strong>Upload</strong> your log file (system/app/auth logs or exported EVTX).</li>
+          <li><strong>Analyze</strong> — Logix scans for attack patterns and anomalies.</li>
+          <li><strong>Report</strong> — Structured findings, evidence lines and step-by-step fixes.</li>
+        </ol>
+        <p class="muted">If critical items appear (ransomware/reverse shell), isolate the machine immediately and contact incident responders.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>Logix • Demo build</div>
+      <div class="right muted">Need help? Ask the demo team.</div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

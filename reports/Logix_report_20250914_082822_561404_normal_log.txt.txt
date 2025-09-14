@@ -1,0 +1,28 @@
+=== Logix Report ===
+Analyzed at (UTC): 2025-09-14T02:58:22.567194Z
+Total lines processed: 10
+
+SUMMARY:
+Suspicious Download / Binary Fetch (confidence 0.66)
+
+DETAILED FINDINGS:
+------------------------------------------------------------
+Name: Suspicious Download / Binary Fetch
+Severity: 9
+Confidence: 0.66
+Count: 1
+Suggested Remediation:
+  - Isolate host immediately and scan binaries offline.
+  - Block the source domain and remove malicious files.
+Immediate Precaution: Do not execute suspicious files; collect for AV analysis.
+Evidence (excerpt):
+  line 2: 2025-09-14 10:01:25 INFO Process started: explorer.exe (PID=1234)
+
+
+
+[No local user guide found]
+
+IMMEDIATE PRECAUTIONS:
+- If a compromise is suspected: disconnect the device from the network immediately.
+- Preserve evidence: do not reboot the host if possible; collect logs/images only by trained personnel.
+- Change passwords for affected accounts from a separate clean device.

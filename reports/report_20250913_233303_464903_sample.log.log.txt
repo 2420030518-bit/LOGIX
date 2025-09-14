@@ -1,0 +1,5 @@
+SUMMARY: Suspicious Download / Binary Fetch (confidence 0.84)
+Suspicious Download / Binary Fetch (x2)
+Command Injection / Reverse Shell (x2)
+Authentication Failures / Brute-force (x1)
+Possible SQL Injection (x1)
