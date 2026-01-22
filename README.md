@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LOGIX - Smart Log Analyzer
 
 LOGIX is a lightweight log analysis tool that detects suspicious activities, brute-force attempts, malware traces, and common attack patterns from system/application logs.  
@@ -23,3 +24,13 @@ It generates a detailed report with severity, confidence level, suggested remedi
 ---
 
 ## 📂 Project Structure
+=======
+venv/
+__pycache__/
+*.pyc
+reports/
+uploads/
+.env
+templates/guide.txt
+templates/static.html
+>>>>>>> ad262bd (Finalize cyber log analyzer with clean gitignore and documentation)

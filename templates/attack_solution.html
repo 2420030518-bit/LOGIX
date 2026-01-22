@@ -8,7 +8,7 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">Logix</div>
+    <a href="/" class="brand">Logix</a>
     <nav class="topnav">
       <a href="/" class="cta">Home</a>
       <a href="/user-guide" class="cta">User Guide</a>
@@ -17,19 +17,19 @@
 
   <main class="layout-single">
     <div class="card">
-      <h2>Attack-specific Solutions</h2>
+      <h2 class="big">Attack-specific Solutions</h2>
 
       {% if found %}
         <p class="muted">We detected the following probable attacks. Each item contains immediate precautions and suggested next steps.</p>
 
         {% for a in found %}
-          <div class="finding">
+          <div class="finding" style="margin-top: 20px;">
             <h3>{{ loop.index }}. {{ a.name }}</h3>
             {% if a.precaution %}
-              <p><strong>Immediate Precaution:</strong> {{ a.precaution }}</p>
+              <p style="margin-top: 10px;"><strong>Immediate Precaution:</strong> {{ a.precaution }}</p>
             {% endif %}
             {% if a.remediation %}
-              <p><strong>Suggested Remediation:</strong></p>
+              <p style="margin-top: 10px;"><strong>Suggested Remediation:</strong></p>
               <ul>
                 {% for r in a.remediation %}
                   <li>{{ r }}</li>
@@ -37,19 +37,18 @@
               </ul>
             {% endif %}
             {% if a.evidence %}
-              <p><strong>Evidence lines:</strong></p>
+              <p style="margin-top: 10px;"><strong>Evidence lines:</strong></p>
               <pre class="evidence-pre">{{ a.evidence | join("\n") }}</pre>
             {% endif %}
-            <hr/>
           </div>
         {% endfor %}
       {% else %}
         <p>No known attack patterns matched in the uploaded report. Try uploading the original log file instead.</p>
       {% endif %}
 
-      <p style="margin-top:12px;">
+      <p style="margin-top:30px;">
         <a href="/want-solution" class="btn">Upload another report</a>
-        <a href="/" class="btn" style="background:#ccc; color:#022; margin-left:8px;">Back to Home</a>
+        <a href="/" class="btn" style="background:#555; color:#fff; margin-left:8px;">Back to Home</a>
       </p>
     </div>
   </main>

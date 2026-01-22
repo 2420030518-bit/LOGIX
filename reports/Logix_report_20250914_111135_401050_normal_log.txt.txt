@@ -1,0 +1,17 @@
+=== Logix Report ===
+Analyzed at (UTC): 2025-09-14T05:41:35.409051Z
+Total lines processed: 10
+
+SUMMARY:
+No clear attack patterns detected
+
+DETAILED FINDINGS:
+No suspicious patterns detected by current rule-set.
+
+
+[No local user guide found]
+
+IMMEDIATE PRECAUTIONS:
+- If a compromise is suspected: disconnect the device from the network immediately.
+- Preserve evidence: do not reboot the host if possible; collect logs/images only by trained personnel.
+- Change passwords for affected accounts from a separate clean device.

